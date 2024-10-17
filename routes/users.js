@@ -1,9 +1,30 @@
-var express = require('express');
-var router = express.Router();
+const mongoose = require("mongoose");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+mongoose.connect("mongodb://127.0.0.1:27017/pinterst_clone");
+
+const userShchema = mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "posts" }],
+  dp: {
+    type: String,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  fullName: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = router;
+module.exports = mongoose.model("user", userShchema);
